@@ -1100,6 +1100,27 @@ function render(){
   document.getElementById('heroSub').textContent = `最終更新: ${ts}`;
   document.getElementById('cefiTotal').textContent = yen(totalCefi);
   document.getElementById('cryptoTotal').textContent = priceError ? '価格取得エラー' : yen(totalCrypto);
+  // パーセンテージ表示
+  if(grand > 0 && !priceError){
+    const cefiPct = (totalCefi / grand * 100).toFixed(1);
+    const cryptoPct = (totalCrypto / grand * 100).toFixed(1);
+    let cefiPctEl = document.getElementById('cefiPct');
+    if(!cefiPctEl){
+      cefiPctEl = document.createElement('div');
+      cefiPctEl.id = 'cefiPct';
+      cefiPctEl.style.cssText = 'font-family:DM Mono,monospace;font-size:10px;color:var(--text3);margin-top:3px;';
+      document.getElementById('cefiTotal').parentElement.appendChild(cefiPctEl);
+    }
+    cefiPctEl.textContent = cefiPct + '%';
+    let cryptoPctEl = document.getElementById('cryptoPct');
+    if(!cryptoPctEl){
+      cryptoPctEl = document.createElement('div');
+      cryptoPctEl.id = 'cryptoPct';
+      cryptoPctEl.style.cssText = 'font-family:DM Mono,monospace;font-size:10px;color:var(--text3);margin-top:3px;';
+      document.getElementById('cryptoTotal').parentElement.appendChild(cryptoPctEl);
+    }
+    cryptoPctEl.textContent = cryptoPct + '%';
+  }
 
   // Re-apply blur state (preserves user preference)
   applyAllBlur();
